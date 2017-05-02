@@ -1,0 +1,7 @@
+NUGET
+  remote: http://www.nuget.org/api/v2
+    FAKE (4.50)
+    FAKE.Dotnet (2.0)
+    NuGet.CommandLine (3.5)
+    Steinpilz.DevFlow.Fake (1.1)
+    xunit.runner.console (2.2)

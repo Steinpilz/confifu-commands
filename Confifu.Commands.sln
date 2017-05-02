@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sln", ".sln", "{CC408C3F-1C0B-498C-A043-DF8DD3F7FDE8}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		build.bat = build.bat
+		scripts\build.fsx = scripts\build.fsx
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Confifu.Commands", "src\app\Confifu.Commands\Confifu.Commands.csproj", "{E190483B-6D02-40CB-BECE-35E76F7393A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CD0E9E1C-CD12-48E6-A6AC-92473EA7759A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Confifu.Commands.Tests", "src\test\Confifu.Commands.Tests\Confifu.Commands.Tests.csproj", "{85EE2433-9399-406A-8B6F-1CDB53B806E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E190483B-6D02-40CB-BECE-35E76F7393A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E190483B-6D02-40CB-BECE-35E76F7393A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E190483B-6D02-40CB-BECE-35E76F7393A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E190483B-6D02-40CB-BECE-35E76F7393A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85EE2433-9399-406A-8B6F-1CDB53B806E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85EE2433-9399-406A-8B6F-1CDB53B806E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85EE2433-9399-406A-8B6F-1CDB53B806E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85EE2433-9399-406A-8B6F-1CDB53B806E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{85EE2433-9399-406A-8B6F-1CDB53B806E1} = {CD0E9E1C-CD12-48E6-A6AC-92473EA7759A}
+	EndGlobalSection
+EndGlobal
