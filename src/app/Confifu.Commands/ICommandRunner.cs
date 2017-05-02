@@ -73,7 +73,7 @@ namespace Confifu.Commands
                 .Add(taskSpecificVars)
                 .Build();
 
-            return Succeed((error, info) =>
+            return RunGeneric((error, info) =>
             {
                 command.Run(new CommandRunContext(varsWithDefaultParameters, info, error));
             });
@@ -89,7 +89,7 @@ namespace Confifu.Commands
             return CommandRunResult.Fail(errorWriter.ToString(), infoWriter.ToString());
         }
 
-        CommandRunResult Succeed(Action<StringWriter, StringWriter> action)
+        CommandRunResult RunGeneric(Action<StringWriter, StringWriter> action)
         {
             var errorWriter = new StringWriter();
             var infoWriter = new StringWriter();
@@ -97,6 +97,11 @@ namespace Confifu.Commands
             try
             {
                 action(errorWriter, infoWriter);
+                var errorStr = errorWriter.ToString();
+
+                if (!string.IsNullOrEmpty(errorStr))
+                    return CommandRunResult.Fail(errorStr, infoWriter.ToString());
+
                 return CommandRunResult.Ok(infoWriter.ToString());
             }
             catch(Exception ex)
