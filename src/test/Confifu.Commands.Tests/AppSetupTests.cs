@@ -86,6 +86,12 @@ namespace Confifu.Commands.Tests
 
             res.Succeed.ShouldBeTrue();
         }
+
+        [Fact]
+        public void it_does_not_fail_if_command_does_not_exist()
+        {
+            RunCommand("Not-Exists");
+        }
     }
 
     class App : Confifu.AppSetup

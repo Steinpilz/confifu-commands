@@ -47,7 +47,7 @@ namespace Confifu.Commands
             var command = this.commandsLookups[commandName].FirstOrDefault();
 
             if (command == null)
-                CommandRunResult.Fail(
+                return CommandRunResult.Fail(
                     $"Command {commandName} not found. Available commands: [{string.Join(", ", this.commands.Select(x => x.Definition().Name))}]");
 
             var def = command.Definition();
