@@ -179,8 +179,8 @@ namespace Confifu.Commands
 
         public void Run(CommandRunContext context)
         {
-            context.Info.WriteLine("Usage: amin <command> [parameters]");
-            context.Info.WriteLine("Use: amin <command> --help to print command's help");
+            context.Info.WriteLine("Usage: %host% <command> [parameters]");
+            //context.Info.WriteLine("Use: amin <command> --help to print command's help");
 
             context.Info.WriteLine("Available commands: ");
             context.Info.WriteLine();
