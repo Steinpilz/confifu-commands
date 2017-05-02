@@ -8,11 +8,16 @@ using Confifu.Autofac;
 using Autofac;
 using Confifu.Abstractions.DependencyInjection;
 using Shouldly;
+using System.Reflection;
 
 namespace Confifu.Commands.Tests
 {
     public class AppSetupTests
     {
+        static AppSetupTests()
+        {
+
+        }
         App CreateApp(Dictionary<string, string> args = null)
         {
             var app = new App(new DictionaryConfigVariables(args ?? new Dictionary<string, string> { }));
@@ -88,6 +93,12 @@ namespace Confifu.Commands.Tests
         public IContainer Container { get; private set; }
         public IServiceProvider Sp => AppConfig.GetServiceProvider();
         public ICommandRunner CommandRunner => AppConfig.GetCommandRunner();
+
+        static App()
+        {
+            ModuleInitializer.Initialize();
+        }
+
 
         public App(IConfigVariables env) : base(env)
         {

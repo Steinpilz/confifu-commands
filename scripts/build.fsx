@@ -16,3 +16,5 @@ Lib.setup(fun p ->
             }
     }
 )
+
+RunTargetOrDefault "Watch"
