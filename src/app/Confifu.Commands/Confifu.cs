@@ -29,6 +29,7 @@ namespace Confifu.Commands
                         => new CommandRepository(sp.GetServices<ICommand>())
                         ));
                     sc.Replace(ServiceDescriptor.Singleton<ICommandRunner, CommandRunner>());
+                    sc.AddTransient<ICommandRunnerOutput, NullCommandRunnerOutput>();
                 });
                 return RegisterCommand<HelpCommand>();
             }

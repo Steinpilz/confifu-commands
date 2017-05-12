@@ -32,9 +32,15 @@ namespace Confifu.Commands
         readonly ILookup<string, ICommand> commandsLookups;
         readonly IReadOnlyCollection<ICommand> commands;
         readonly IConfigVariables vars;
+        readonly ICommandRunnerOutput output;
 
-        public CommandRunner(ICommandRepository commandRepository, IConfigVariables vars)
+        public CommandRunner(
+            ICommandRepository commandRepository, 
+            IConfigVariables vars,
+            ICommandRunnerOutput output
+            )
         {
+            this.output = output;
             this.vars = vars;
             this.commandsLookups = commandRepository.GetCommands()
                 .ToLookup(x => x.Definition().Name, StringComparer.CurrentCultureIgnoreCase);
@@ -81,19 +87,15 @@ namespace Confifu.Commands
 
         CommandRunResult Failed(Action<StringWriter, StringWriter> action)
         {
-            var errorWriter = new StringWriter();
-            var infoWriter = new StringWriter();
+            action(output.GetErrorWriter(), output.GetInfoWriter());
 
-            action(errorWriter, infoWriter);
-
-            return CommandRunResult.Fail(errorWriter.ToString(), infoWriter.ToString());
+            return CommandRunResult.Fail("", "");
         }
 
         CommandRunResult RunGeneric(Action<StringWriter, StringWriter> action)
         {
-            var errorWriter = new StringWriter();
-            var infoWriter = new StringWriter();
-
+            var errorWriter = this.output.GetErrorWriter();
+            var infoWriter = this.output.GetInfoWriter();
             try
             {
                 action(errorWriter, infoWriter);
@@ -102,14 +104,14 @@ namespace Confifu.Commands
                 if (!string.IsNullOrEmpty(errorStr))
                     return CommandRunResult.Fail(errorStr, infoWriter.ToString());
 
-                return CommandRunResult.Ok(infoWriter.ToString());
+                return CommandRunResult.Ok("");
             }
             catch(Exception ex)
             {
                 infoWriter.WriteLine("Exception occurred:");
                 infoWriter.WriteLine(ex);
 
-                return CommandRunResult.Fail(errorWriter.ToString(), infoWriter.ToString());
+                return CommandRunResult.Fail("", "");
             }
         }
     }
@@ -190,5 +192,17 @@ namespace Confifu.Commands
                 new CommandHelpPrinter(context.Info).Print(command);
             }
         }
+    }
+
+    public interface ICommandRunnerOutput
+    {
+        StringWriter GetInfoWriter();
+        StringWriter GetErrorWriter();
+    }
+
+    class NullCommandRunnerOutput : ICommandRunnerOutput
+    {
+        public StringWriter GetErrorWriter() => new StringWriter();
+        public StringWriter GetInfoWriter() => new StringWriter();
     }
 }

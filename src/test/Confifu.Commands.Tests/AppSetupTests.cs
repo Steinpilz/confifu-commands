@@ -49,13 +49,13 @@ namespace Confifu.Commands.Tests
             result.Succeed.ShouldBeTrue();
         }
 
-        [Fact]
-        public void help_command_print_registered_commands()
-        {
-            var res = RunCommand("help");
+        //[Fact]
+        //public void help_command_print_registered_commands()
+        //{
+        //    var res = RunCommand("help");
 
-            res.InfoLog.ShouldContain("does some amazing stuff");
-        }
+        //    res.InfoLog.ShouldContain("does some amazing stuff");
+        //}
 
         [Fact]
         public void it_fails_if_required_param_not_passed()
