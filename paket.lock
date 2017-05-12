@@ -3,5 +3,5 @@ NUGET
     FAKE (4.50)
     FAKE.Dotnet (2.0)
     NuGet.CommandLine (3.5)
-    Steinpilz.DevFlow.Fake (1.2)
+    Steinpilz.DevFlow.Fake (1.2.1)
     xunit.runner.console (2.2)
