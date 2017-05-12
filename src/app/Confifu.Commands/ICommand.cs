@@ -15,10 +15,10 @@ namespace Confifu.Commands
     public class CommandRunContext
     {
         public IConfigVariables Vars { get; private set; }
-        public StringWriter Info { get; private set; } 
-        public StringWriter Error { get; private set; }
+        public TextWriter Info { get; private set; } 
+        public TextWriter Error { get; private set; }
 
-        public CommandRunContext(IConfigVariables vars, StringWriter info, StringWriter error)
+        public CommandRunContext(IConfigVariables vars, TextWriter info, TextWriter error)
         {
             Vars = vars;
             Info = info;

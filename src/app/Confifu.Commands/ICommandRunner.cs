@@ -15,16 +15,15 @@ namespace Confifu.Commands
     public class CommandRunResult
     {
         public bool Succeed { get; private set; }
-        public string ErrorLog { get; private set; }
-        public string InfoLog { get; private set; }
+        public string Error { get; private set; }
 
         private CommandRunResult() { }
 
-        public static CommandRunResult Ok(string info)
-            => new CommandRunResult { Succeed = true, InfoLog = info, ErrorLog = "" };
+        public static CommandRunResult Ok()
+            => new CommandRunResult { Succeed = true };
 
-        public static CommandRunResult Fail(string error, string info = "")
-            => new CommandRunResult { Succeed = false, ErrorLog = error, InfoLog = info };
+        public static CommandRunResult Fail(string error)
+            => new CommandRunResult { Succeed = false, Error = error };
     }
 
     class CommandRunner : ICommandRunner
@@ -85,33 +84,28 @@ namespace Confifu.Commands
             });
         }
 
-        CommandRunResult Failed(Action<StringWriter, StringWriter> action)
+        CommandRunResult Failed(Action<TextWriter, TextWriter> action)
         {
             action(output.GetErrorWriter(), output.GetInfoWriter());
 
-            return CommandRunResult.Fail("", "");
+            return CommandRunResult.Fail("");
         }
 
-        CommandRunResult RunGeneric(Action<StringWriter, StringWriter> action)
+        CommandRunResult RunGeneric(Action<TextWriter, TextWriter> action)
         {
             var errorWriter = this.output.GetErrorWriter();
             var infoWriter = this.output.GetInfoWriter();
             try
             {
                 action(errorWriter, infoWriter);
-                var errorStr = errorWriter.ToString();
-
-                if (!string.IsNullOrEmpty(errorStr))
-                    return CommandRunResult.Fail(errorStr, infoWriter.ToString());
-
-                return CommandRunResult.Ok("");
+                return CommandRunResult.Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 infoWriter.WriteLine("Exception occurred:");
                 infoWriter.WriteLine(ex);
 
-                return CommandRunResult.Fail("", "");
+                return CommandRunResult.Fail("");
             }
         }
     }
@@ -133,9 +127,9 @@ namespace Confifu.Commands
 
     class CommandHelpPrinter
     {
-        readonly StringWriter writer;
+        readonly TextWriter writer;
 
-        public CommandHelpPrinter(StringWriter writer)
+        public CommandHelpPrinter(TextWriter writer)
         {
             this.writer = writer;
         }
@@ -144,13 +138,10 @@ namespace Confifu.Commands
         {
             var def = command.Definition();
             this.writer.WriteLine($"  {def.Name}:");
-            this.writer.WriteLine();
 
             this.writer.WriteLine($"    {def.Help}");
-            this.writer.WriteLine();
 
             this.writer.WriteLine("  Command Parameters:");
-            this.writer.WriteLine();
 
             foreach (var parameter in def.Parameters)
             {
@@ -161,8 +152,7 @@ namespace Confifu.Commands
                 this.writer.WriteLine($"      {parameter.Help}");
                 this.writer.WriteLine($"      {requiredStr}, DefaultValue: {defaultValueStr}");
             }
-
-            this.writer.WriteLine();
+            
             this.writer.WriteLine();
         }
     }
@@ -196,13 +186,13 @@ namespace Confifu.Commands
 
     public interface ICommandRunnerOutput
     {
-        StringWriter GetInfoWriter();
-        StringWriter GetErrorWriter();
+        TextWriter GetInfoWriter();
+        TextWriter GetErrorWriter();
     }
 
     class NullCommandRunnerOutput : ICommandRunnerOutput
     {
-        public StringWriter GetErrorWriter() => new StringWriter();
-        public StringWriter GetInfoWriter() => new StringWriter();
+        public TextWriter GetErrorWriter() => new StringWriter();
+        public TextWriter GetInfoWriter() => new StringWriter();
     }
 }
