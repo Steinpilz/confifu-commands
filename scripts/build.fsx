@@ -13,7 +13,7 @@ Lib.setup(fun p ->
         UseDotNetCliToPack = true
         NuGetFeed = 
             { p.NuGetFeed with 
-                ApiKey = environVarOrFail <| "NUGET_API_KEY" |> Some
+                ApiKey = environVarOrNone <| "NUGET_API_KEY" 
             }
     }
 )
