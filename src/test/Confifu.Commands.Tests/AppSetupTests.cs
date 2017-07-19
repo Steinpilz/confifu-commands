@@ -70,7 +70,7 @@ namespace Confifu.Commands.Tests
         {
             var res = RunCommand("test1", new Dictionary<string, string>
             {
-                ["p1"]="xyz"
+                ["Commands:Test1:p1"]="xyz"
             });
 
             res.Succeed.ShouldBeTrue();

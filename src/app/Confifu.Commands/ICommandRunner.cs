@@ -58,10 +58,8 @@ namespace Confifu.Commands
             var def = command.Definition();
             var parameters = def.Parameters;
 
-            var taskSpecificVars = new ConfigVariablesBuilder()
-                .Add(vars)
-                .Add(vars.WithPrefix($"Commands:{def.Name}:"))
-                .Build();
+            var taskSpecificVars = vars.WithPrefix($"Commands:{def.Name}:");
+
             var missedRequiredParameters = parameters.Where(x => x.Required && taskSpecificVars[x.Name] == null);
 
             if (missedRequiredParameters.Any())
