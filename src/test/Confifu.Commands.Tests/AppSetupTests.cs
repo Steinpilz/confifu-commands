@@ -114,7 +114,7 @@ namespace Confifu.Commands.Tests
                     .RegisterCommonServices()
                     .UseCommands(c =>
                     {
-                        c.RegisterCommand<TestCommand1>();
+                        c.RegisterCommandsFromAssembly(GetType().Assembly);
                     });
             });
 
