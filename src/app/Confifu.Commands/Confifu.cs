@@ -45,17 +45,14 @@ namespace Confifu.Commands
 
             public Config RegisterCommand<TCommand>() => RegisterCommand(typeof(TCommand));
 
-#if NET451
             public Config RegisterCommandsFromAssembly(Assembly assembly)
             {
                 foreach (var command in new CommandsAssemblyScanner(assembly).Scan())
                     RegisterCommand(command);
                 return this;
             }
-#endif
         }
 
-#if NET451
         class CommandsAssemblyScanner
         {
             readonly Assembly assembly;
@@ -72,8 +69,6 @@ namespace Confifu.Commands
                                     && !x.IsAbstract && x.IsClass);
             }
         }
-
-#endif
 
         public static IAppConfig UseCommands(this IAppConfig appConfig, Action<Config> configurator = null)
         {

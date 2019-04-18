@@ -128,6 +128,7 @@ BuildMetrics/
 [Bb]in
 [Rr]elease*/
 _ReSharper*/
+.idea
 [Tt]est[Rr]esult*
 *.suo
 */*.suo
