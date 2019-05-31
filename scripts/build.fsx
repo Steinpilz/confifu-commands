@@ -11,6 +11,7 @@ Lib.setup(fun p ->
     { p with 
         PublishProjects = !!"src/app/**/*.csproj"
         UseDotNetCliToPack = true
+        UseDotNetCliToTest = true
         NuGetFeed = 
             { p.NuGetFeed with 
                 ApiKey = environVarOrNone <| "NUGET_API_KEY" 
