@@ -157,11 +157,11 @@ namespace Confifu.Commands
 
     class HelpCommand : ICommand
     {
-        readonly Func<ICommandRepository> commandRepositoryThunk;
+        readonly ICommandRepository _commandRepository;
 
-        public HelpCommand(Func<ICommandRepository> commandRepositoryThunk)
+        public HelpCommand(ICommandRepository commandRepositoryThunk)
         {
-            this.commandRepositoryThunk = commandRepositoryThunk;
+            _commandRepository = commandRepositoryThunk;
         }
 
         public CommandDefinition Definition()
@@ -175,7 +175,7 @@ namespace Confifu.Commands
             context.Info.WriteLine("Available commands: ");
             context.Info.WriteLine();
 
-            foreach (var command in commandRepositoryThunk().GetCommands())
+            foreach (var command in _commandRepository.GetCommands())
             {
                 new CommandHelpPrinter(context.Info).Print(command);
             }
