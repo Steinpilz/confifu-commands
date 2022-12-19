@@ -25,9 +25,10 @@ namespace Confifu.Commands
             {
                 appConfig.RegisterServices(sc =>
                 {
+                    sc.Replace(ServiceDescriptor.Singleton<Func<ICommandRepository>>(sp
+                        => () => new CommandRepository(sp.GetServices<ICommand>())));
                     sc.Replace(ServiceDescriptor.Singleton<ICommandRepository>(sp
-                        => new CommandRepository(sp.GetServices<ICommand>())
-                        ));
+                        => new CommandRepository(sp.GetServices<ICommand>())));
                     sc.Replace(ServiceDescriptor.Singleton<ICommandRunner, CommandRunner>());
                     sc.AddTransient<ICommandRunnerOutput, NullCommandRunnerOutput>();
                 });
